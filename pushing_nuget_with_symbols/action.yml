@@ -15,7 +15,7 @@ runs:
     - uses: actions/setup-dotnet@v2
       with:
         dotnet-version: ${{ inputs.dotnet-version }}
-    - run: dotnet build --configuration Release
+    - run: dotnet build ${{ inputs.path }} -c Release
       shell: bash
     - run: dotnet pack ${{ inputs.path }} --include-source --include-symbols -o Build --configuration Release
       shell: bash
