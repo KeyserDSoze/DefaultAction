@@ -3,9 +3,9 @@ description: 'Pushing your .csproj as nuget package with symbols.'
 inputs:
   path:
     required: true
-  apiKey:
+  api-key:
     required: true
-  dotnetVersion:
+  dotnet-version:
     required: true
 runs:
   using: "composite"
@@ -13,10 +13,10 @@ runs:
     - uses: actions/checkout@v3
     - uses: actions/setup-dotnet@v2
       with:
-        dotnet-version: ${{ inputs.dotnetVersion }}
+        dotnet-version: ${{ inputs.dotnet-version }}
     - name: Build with dotnet
       run: dotnet build --configuration Release
     - name: Pack with dotnet
       run: dotnet pack ${{ inputs.path }} --include-source --include-symbols -o Build --configuration Release
     - name: Push with dotnet
-      run: dotnet nuget push "**/*.nupkg" -k ${{ inputs.apiKey }} --skip-duplicate -s https://api.nuget.org/v3/index.json 
+      run: dotnet nuget push "**/*.nupkg" -k ${{ inputs.api-key }} --skip-duplicate -s https://api.nuget.org/v3/index.json 
