@@ -1,0 +1,18 @@
+name: 'pushing-nuget-with-symbols'
+description: 'Pushing your .csproj as nuget package with symbols.'
+inputs:
+  path:
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: ${{secrets.NET_VERSION}}
+    - name: Build with dotnet
+      run: dotnet build --configuration Release
+    - name: Pack with dotnet
+      run: dotnet pack ${{ inputs.path }} --include-source --include-symbols -o Build --configuration Release
+    - name: Push with dotnet
+      run: dotnet nuget push "**/*.nupkg" -k ${{secrets.NUGET_API_KEY}} --skip-duplicate -s https://api.nuget.org/v3/index.json 
