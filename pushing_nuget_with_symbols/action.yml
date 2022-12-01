@@ -17,7 +17,5 @@ runs:
         dotnet-version: ${{ inputs.dotnet-version }}
     - run: dotnet build ${{ inputs.path }} -c Release
       shell: bash
-    - run: dotnet pack ${{ inputs.path }} --include-source --include-symbols -o Build --configuration Release
-      shell: bash
     - run: dotnet nuget push "**/*.nupkg" -k ${{ inputs.api-key }} --skip-duplicate -s https://api.nuget.org/v3/index.json 
       shell: bash
